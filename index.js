@@ -1,14 +1,12 @@
-const { log } = require('console');
-const EventEmitter = require('events');
+const PizzaShop = require('./pizza-shop');
 
-const emitter = new EventEmitter();
+const pizzaShop = new PizzaShop();
 
-//* .on => Event Listener for responding to the event
-emitter.on('order-pizza', (size, topping) => {
-   console.log('Order recieved!');
-   console.log(`size: ${size}, topping: ${topping}`);
-});
+pizzaShop.on('order', (size, topping) => {
+   console.log('Order Recieved Successfully');
+   console.log('Size:', size);
+   console.log('topping:', topping);
+})
 
-//* Event's name & arguments
-emitter.emit('order-pizza', 'large', 'meet');
-
+pizzaShop.order('large', 'chicken');
+pizzaShop.displayOrderNumber();
