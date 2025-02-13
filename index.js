@@ -1,12 +1,13 @@
-const PizzaShop = require('./pizza-shop');
+import fs from 'fs';
 
-const pizzaShop = new PizzaShop();
+const readeableStream = fs.createReadStream('./file1.txt', {
+   encoding: "utf-8",
+   highWaterMark: 2
+});
 
-pizzaShop.on('order', (size, topping) => {
-   console.log('Order Recieved Successfully');
-   console.log('Size:', size);
-   console.log('topping:', topping);
-})
+const writableStream = fs.createWriteStream('./file2.txt');
 
-pizzaShop.order('large', 'chicken');
-pizzaShop.displayOrderNumber();
+readeableStream.on('data', chunk => {
+   console.log(chunk);
+   writableStream.write(chunk);
+});
