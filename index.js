@@ -1,5 +1,6 @@
 import { log } from 'console';
 import htpp from 'http';
+import fs from 'fs';
 
 //* (req, res) => {} is a request listener
 const server = htpp.createServer((req, res) => {
@@ -8,10 +9,13 @@ const server = htpp.createServer((req, res) => {
       lasttName: 'Azmy',
    };
 
+   const html = fs.readFileSync("./index.html", "utf-8");
+
    res.writeHead(200, {
       "content-type": 'text/html'
    });
-   res.end("<h1>Hello, world</h1>");
+   
+   res.end(html);
 });
 
 server.listen(3000, () => {
