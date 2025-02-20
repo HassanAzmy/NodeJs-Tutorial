@@ -1,22 +1,14 @@
-import fs from 'fs';
+import { log } from 'console';
+import htpp from 'http';
 
-//* Types of Streams *//
-/*
-   * Readable  Stream => From which data can be read
-   * Writable  Stream => To which we can write data
-   * Dublex    Stream => That are both readable and writable
-   * Transform Stream => that can modify or transform the data as its written or read
-*/
-
-const readeableStream = fs.createReadStream('./file1.txt', {
-   encoding: "utf-8",
-   highWaterMark: 2
+//* It's prefered to specify the content type
+const server = htpp.createServer((req, res) => {
+   res.writeHead(200, {
+      "content-type": 'text/plain'
+   });
+   res.end('Hello world!');
 });
 
-const writableStream = fs.createWriteStream('./file2.txt');
-
-//* It extends from EventEmitter
-readeableStream.on('data', chunk => {
-   console.log(chunk);
-   writableStream.write(chunk);
+server.listen(3000, () => {
+   console.log('Server is running on port 3000');
 });
