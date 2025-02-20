@@ -1,20 +1,20 @@
-import { log } from 'console';
 import htpp from 'http';
-import fs from 'fs';
-const __dirname = import.meta.dirname;
 
 //* (req, res) => {} is a request listener
 const server = htpp.createServer((req, res) => {
-   const superHero = {
-      firstName: 'Hassan',
-      lasttName: 'Azmy',
-   };
-
-   res.writeHead(200, {
-      "content-type": 'text/html'
-   });
-
-   fs.createReadStream(__dirname + "/index.html").pipe(res);
+   if(req.url === '/') {
+      res.writeHead(200, {"content-type": 'text/plain'});
+      res.end('Home page');
+   } else if(req.url === '/about') {
+      res.writeHead(200, {"content-type": 'text/plain'});
+      res.end('About page');
+   } else if(req.url === '/api') {
+      res.writeHead(200, {"content-type": 'application/json'});
+      res.end(JSON.stringify({
+         firstName: 'Hassan',
+         lastName: 'Azmy'
+      }));
+   }
 });
 
 server.listen(3000, () => {
