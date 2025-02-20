@@ -1,12 +1,17 @@
 import { log } from 'console';
 import htpp from 'http';
 
-//* It's prefered to specify the content type
+//* (req, res) => {} is a request listener
 const server = htpp.createServer((req, res) => {
+   const superHero = {
+      firstName: 'Hassan',
+      lasttName: 'Azmy',
+   };
+
    res.writeHead(200, {
-      "content-type": 'text/plain'
+      "content-type": 'application/json'
    });
-   res.end('Hello world!');
+   res.end(JSON.stringify(superHero));
 });
 
 server.listen(3000, () => {
