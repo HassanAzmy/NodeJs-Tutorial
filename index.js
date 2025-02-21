@@ -1,8 +1,10 @@
 import crypto from 'crypto';
 
-//* Since we use the Sync version. It's run on the main thread which is blocking
+//* Since we use the Async version. It's run parallel thus taking the same time
 const start = Date.now();
-crypto.pbkdf2Sync("password", "salt", 100000, 512, "sha512");  // nearly 550s  - 650s
-crypto.pbkdf2Sync("password", "salt", 100000, 512, "sha512");  // nearly 1200s - 1300s
-crypto.pbkdf2Sync("password", "salt", 100000, 512, "sha512");  // nearly 1800s - 1900s
-console.log("Hash: ", Date.now() - start);
+const MAX_CALLS = 3;
+for(let i = 0; i < MAX_CALLS; i ++) {
+   crypto.pbkdf2("password", "salt", 100000, 512, "sha512", () => {
+      console.log(`Hash: ${i + 1}`, Date.now() - start);
+   });
+} 
