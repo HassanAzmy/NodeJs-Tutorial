@@ -1,22 +1,8 @@
-import htpp from 'http';
+import crypto from 'crypto';
 
-//* (req, res) => {} is a request listener
-const server = htpp.createServer((req, res) => {
-   if(req.url === '/') {
-      res.writeHead(200, {"content-type": 'text/plain'});
-      res.end('Home page');
-   } else if(req.url === '/about') {
-      res.writeHead(200, {"content-type": 'text/plain'});
-      res.end('About page');
-   } else if(req.url === '/api') {
-      res.writeHead(200, {"content-type": 'application/json'});
-      res.end(JSON.stringify({
-         firstName: 'Hassan',
-         lastName: 'Azmy'
-      }));
-   }
-});
-
-server.listen(3000, () => {
-   console.log('Server is running on port 3000');
-});
+//* Since we use the Sync version. It's run on the main thread which is blocking
+const start = Date.now();
+crypto.pbkdf2Sync("password", "salt", 100000, 512, "sha512");  // nearly 550s  - 650s
+crypto.pbkdf2Sync("password", "salt", 100000, 512, "sha512");  // nearly 1200s - 1300s
+crypto.pbkdf2Sync("password", "salt", 100000, 512, "sha512");  // nearly 1800s - 1900s
+console.log("Hash: ", Date.now() - start);
